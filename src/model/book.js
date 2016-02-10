@@ -14,19 +14,18 @@ function Book(slots) {
 }
 
 /**
- * represents the collection of all added books as an entity table
- * @type object
+ * A class-level property representing the collection of all Book instances
+ * managed by the application in the form of an entity table.
  */
-book.instances = {};
+Book.instances = {};
 
 /**
  * creates a new book and adds it to the book.instances collection
  * @param slots
  */
-book.add = function(slots) {
+Book.add = function(slots) {
     var book = new Book(slots);
-    //add book to the collection
-    book.instances[slots.isbn] = book;
+    Book.instances[slots.isbn] = book;
     console.log("Book " + slots.title + " created!");
 };
 
@@ -35,9 +34,8 @@ book.add = function(slots) {
  * @param bookRow
  * @returns {Book}
  */
-book.convertRow2Obj = function(bookRow) {
-    var book = new Book(bookRow);
-    return book;
+Book.convertRow2Obj = function(bookRow) {
+    return new Book(bookRow);
 };
 
 /**
@@ -46,7 +44,7 @@ book.convertRow2Obj = function(bookRow) {
  * 2. convert it to books table
  * 3. convert each row of books to a corresponding object of type Book
  */
-book.loadAll = function() {
+Book.loadAll = function() {
 
     var bookString = "", keys = [], key = "", books = {};
     try {
@@ -63,32 +61,33 @@ book.loadAll = function() {
         console.log(keys.length + " books loaded!");
         for(var i=0; i<keys.length; i++) {
             key = keys[i];
-            book.instances[key] = book.convertRow2Obj(books[key]);  //create a book from the table row and add it to our collection
+            Book.instances[key] = Book.convertRow2Obj(books[key]);  //create a book from the table row and add it to our collection
         }
     }
 };
 
 /**
  * Updates a Book instance
- * first retrieve the given book from book.instances, and update the values
+ * first retrieve the given book from Book.instances, and update the values
  * @param slots
  */
-book.update = function(slots) {
-    var book = book.instances[slots.isbn];
+Book.update = function(slots) {
+    var book = Book.instances[slots.isbn];
     //convert the user input, which is string to int
     var year = parseInt(slots.year);
     if(book.title !== slots.title) {book.title = slots.title;}
     if(book.year !== slots.year) {book.year = slots.year;}
+    console.log("Book " + slots.isbn + " modified!");
 };
 
 /**
- * Deletes a book instance from book.instances collection
+ * Deletes a book instance from Book.instances collection
  * first checks if the table has a row with the given key
  * @param isbn
  */
-book.destroy = function(isbn) {
-    if(book.instances[isbn]) {
-        delete book.instances[isbn];
+Book.destroy = function(isbn) {
+    if(Book.instances[isbn]) {
+        delete Book.instances[isbn];
         console.log("Book " + isbn + " deleted");
     } else {
         console.log("There is no book with the isbn " + isbn + " in the database");
@@ -100,11 +99,11 @@ book.destroy = function(isbn) {
  * 1. convert the table into a string
  * 2. write that string as a value of the entity table key 'books'
  */
-book.saveAll = function() {
+Book.saveAll = function() {
     var bookString = "", error = false;
-    var numberOfBooks = Object.keys(book.instances).length;
+    var numberOfBooks = Object.keys(Book.instances).length;
     try {
-        bookString = JSON.stringify(book.instances);
+        bookString = JSON.stringify(Book.instances);
         localStorage["books"] = bookString;
     } catch (e) {
         alert("error when writing to localstorage");
@@ -118,29 +117,29 @@ book.saveAll = function() {
 /**
  * Creates some test data and saves it into our local storage
  */
-book.createTestData = function() {
-    book.instances["1234"] = new book({
+Book.createTestData = function() {
+    Book.instances["1234"] = new Book({
         isbn:"1234",
         title:"Web Development",
         year:1991
     });
-    book.instances["0465026567"] = new book({
+    Book.instances["0465026567"] = new Book({
         isbn:"0465026567",
         title:"Gödel, Escher, Bach",
         year:1999
     });
-    book.instances["0465030793"] = new book({
+    Book.instances["0465030793"] = new Book({
         isbn:"0465030793",
         title:"I Am A Strange Loop",
         year:2008
     });
-    book.saveAll();
+    Book.saveAll();
 };
 
 /**
  * Clears the database by storing string representation of an empty object
  */
-book.clearData = function() {
+Book.clearData = function() {
     if(confirm("Do you really want to delete all book data?")) {
         localStorage["books"] = "{}";
     }
