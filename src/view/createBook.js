@@ -17,6 +17,7 @@ library.view.createBook = {
             book.saveAll();
         });
     },
+
     /**
      * save user input data
      */
