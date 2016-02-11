@@ -31,6 +31,7 @@ library.view.deleteBook = {
         if(isbn) {
             Book.destroy(isbn);
             selectE1.remove(selectE1.selectedIndex);
+            console.log("Data is cleared");
         }
     }
 };
