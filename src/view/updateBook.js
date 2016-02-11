@@ -12,14 +12,14 @@ library.view.updateBook = {
         var formE1 = document.forms['book'];
         var selectBookE1 = formE1.selectBook;
         var saveBtn = formE1.commit;
-        var keys=[], key="";
+        var keys=[], key="", book = null, optionE1 = null;
         //load all the book objects
-        book.loadAll();
+        Book.loadAll();
         //populate the selection list with books
-        keys = Object.keys(book.instances);
+        keys = Object.keys(Book.instances);
         for(var i= 0; i<keys.length; i++) {
             key = keys[i];
-            book = book.instances[key];
+            book = Book.instances[key];
             optionE1 = document.createElement("option");
             optionE1.text = book.title;
             optionE1.value = book.isbn;
@@ -29,7 +29,7 @@ library.view.updateBook = {
         selectBookE1.addEventListener("change", function() {
             var book = null, key = selectBookE1.value;
             if(key) {
-                book = book.instances[key];
+                book = Book.instances[key];
                 formE1.isbn.value = book.isbn;
                 formE1.title.value = book.title;
                 formE1.year.value = book.year;
@@ -49,7 +49,7 @@ library.view.updateBook = {
             title: formE1.title.value,
             year: formE1.year.value
         };
-        book.update(slots);
+        Book.update(slots);
         formE1.reset();
     }
 };

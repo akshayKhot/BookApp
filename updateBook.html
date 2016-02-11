@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Book App</title>
     <script src="src/ctrl/initialize.js"></script>
-    <script src="src/model/book.js"></script>
+    <script src="src/model/Book.js"></script>
     <script src="src/view/updateBook.js"></script>
     <script>
         window.addEventListener("load", library.view.updateBook.setupUI);
@@ -18,9 +18,10 @@
                 <select name="selectBook"><option value="">---</option></select>
             </label>
         </p>
+        <!--output in the first property doesn't allow changing the isbn-->
         <p><label>ISBN: <output name="isbn"></output></label></p>
-        <p><label>Title: <output name="title"></output></label></p>
-        <p><label>Year: <output name="year"></output></label></p>
+        <p><label>Title: <input name="title"/></label></p>
+        <p><label>Year: <input name="year"/></label></p>
         <p><button type="button" name="commit">Save Changes</button></p>
     </form>
 
