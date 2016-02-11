@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Book App</title>
-    <script src="src/model/book.js"></script>
+    <script src="src/model/Book.js"></script>
 </head>
 <body>
     <h1>Public Library</h1>
     <h2>An Example of a Minimal JavaScript Front-End App</h2>
     <p>Following operations are supported</p>
     <menu>
-        <li><a href="listOfBooks.html">
+        <li><a href="listBooks.html">
             <button type="button">List all books</button>
         </a></li>
         <li><a href="createBook.html">
@@ -23,10 +23,10 @@
             <button type="button">Delete a book</button>
         </a></li>
         <li>
-            <button type="button" onclick="book.clearData()">Clear DB</button>
+            <button type="button" onclick="Book.clearData()">Clear DB</button>
         </li>
         <li>
-            <button type="button" onclick="book.createTestData()">Create test data</button>
+            <button type="button" onclick="Book.createTestData()">Create test data</button>
         </li>
     </menu>
 
