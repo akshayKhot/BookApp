@@ -11,10 +11,11 @@ library.view.createBook = {
     setupUI: function() {
         var saveButton = document.forms['book'].commit;
         //load all book objects
-        book.loadAll();
-        //set an event handler for the save/submit button
-        saveButton.addEventListener("beforeunload", function() {
-            book.saveAll();
+        Book.loadAll();
+        //set an event handler for the save button
+        saveButton.addEventListener("click", library.view.createBook.handleSaveBtnClickEvent);
+        window.addEventListener("beforeunload", function() {
+            Book.saveAll();
         });
     },
 
@@ -28,7 +29,7 @@ library.view.createBook = {
             title: formE1.title.value,
             year: formE1.year.value
         };
-        book.add(slots);
+        Book.add(slots);
         formE1.reset();
     }
 };
